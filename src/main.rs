@@ -1,3 +1,6 @@
+
+#![allow(unused_variables)
+]
 fn main() {
     println!("Hello, world!");
     // let location: [f32; 2] = [0.0, 0.0];
@@ -22,4 +25,9 @@ fn main() {
     let airline_names = format!("{} {} {}", duck, "", airlines);
     println!("{}", airline_names);
 
+    let mut slogan = String::new();
+    slogan.push_str("We hit the ground");
+    slogan.push(' ');
+    slogan = slogan + "running";
+    println!("{}", slogan);
 }

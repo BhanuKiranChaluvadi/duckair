@@ -1,42 +1,28 @@
+#![allow(unused_variables)]
 
-#![allow(unused_variables)
-]
 fn main() {
-    println!("Hello, world!");
-    let x = 5.0;
-    let y: u16 = 5;
+    const EARTH_RADIUS_IN_KILOMETERS: f64 = 6371.0;
 
-    let float_thirty_two: f32 = 17.2;
-    let unsigned_eight: u8 = 5;
-    let result = float_thirty_two  / unsigned_eight as f32;
+    let kcle_lattitude_in_degrees: f64 = 41.40538;
+    let kcle_longitude_in_degrees: f64 = -81.85387;
 
-    let number: u8 = 65;
-    let letter: char = number as char;
-    println!("{}", letter);
+    let kslc_lattitude_in_degrees: f64 = 40.78839;
+    let kslc_longitude_in_degrees: f64 = -111.97777;
 
-    let mut _changeable_varibale = 5;
+    let kcle_lattitude_in_radians = kcle_lattitude_in_degrees.to_radians();
+    let kslc_lattitude_in_radians = kslc_lattitude_in_degrees.to_radians();
 
-    let scope_test = "outer scope";
-    println!("scope_test: {}", scope_test);
-    {
-        let scope_test = "inner scope";
-        println!("scope_test: {}", scope_test);
-    }
-    println!("scope_test: {}", scope_test);
+    let delta_latitude_radians =
+        (kslc_lattitude_in_degrees - kcle_lattitude_in_degrees).to_radians();
+    let delta_longitude_radians =
+        (kslc_longitude_in_degrees - kcle_longitude_in_degrees).to_radians();
 
-    let squared = i32::pow(5, 2);
-    println!("5 squared is {}", squared);
+    let inner_central_angle = f64::powi((delta_latitude_radians / 2.0).sin(), 2)
+        + kcle_lattitude_in_radians.cos()
+            * kslc_lattitude_in_radians.cos()
+            * f64::powi((delta_longitude_radians / 2.0).sin(), 2);
+    let central_angle = 2.0 * inner_central_angle.sqrt().asin();
 
-    let float_integar = f32::powi(6.5, 3);
-    println!("6.5 cubed is {}", float_integar);
-
-    let float_float = f32::powf(6.5, 3.14);
-    print!("6.5 to the power of pi is {}", float_float);
-
-    let are_equal_is_true = 5 == 5;
-    let are_not_equal_is_true = 5 != 5;
-
-    let is_true = true;
-    let is_false = !is_true;
-
+    let distance = EARTH_RADIUS_IN_KILOMETERS * central_angle;
+    println!("Distance between KCLE and KSLC is {:.1} km", distance)
 }

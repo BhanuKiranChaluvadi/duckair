@@ -65,4 +65,10 @@ fn main() {
     print_nav_aid(&vor_dqn_sgh);
     print_nav_aid(&fix_ugnit);
 
+    let animal = "Duck";
+
+    if let animal = "Duck" {
+        println!("Animal is {}", animal);
+    }
+    
 }

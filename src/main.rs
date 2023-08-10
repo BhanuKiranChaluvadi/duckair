@@ -1,10 +1,27 @@
 #![allow(unused_variables)]
 
 enum NavigationAids {
-    NDB,
-    VOR,
-    VORDME,
-    FIX { name: String, lat: f64, lon: f64 },
+    NDB(u16),
+    VOR(String, f32),
+    VORDME(String, f32),
+    FIX {
+        name: String,
+        latitude: f32,
+        longitude: f32,
+    },
+}
+
+fn print_nav_aid(navid: &NavigationAids) {
+    match navid {
+        NavigationAids::NDB(freq) => println!("NDB at {} kHz", freq),
+        NavigationAids::VOR(name, freq) => println!("VOR {} at {} MHz", name, freq),
+        NavigationAids::VORDME(name, freq) => println!("VOR/DME {} at {} MHz", name, freq),
+        NavigationAids::FIX {
+            name,
+            latitude,
+            longitude,
+        } => println!("FIX {} at {}, {}", name, latitude, longitude),
+    }
 }
 
 fn main() {
@@ -33,57 +50,19 @@ fn main() {
     let distance = EARTH_RADIUS_IN_KILOMETERS * central_angle;
     println!("Distance between KCLE and KSLC is {:.1} km", distance);
 
-    // println!("NDB: {:?}", NavigationAids::NDB as u8);
-    // println!("NDB:\t{}", NavigationAids::NDB as u8);
-
-    // print enum
-    match NavigationAids::NDB {
-        NavigationAids::NDB => println!("NDB:\t{}", 0),
-        NavigationAids::VOR => println!("VOR:\t{}", 1),
-        NavigationAids::VORDME => println!("VORDME:\t{}", 2),
-        NavigationAids::FIX { name, lat, lon } => {
-            println!("FIX:\t{} ({}, {})", name, lat, lon);
-        }
-    }
-
-    let phrase = String::from("the quick brown fox jumped over the lazy dog");
-    let letters = phrase.chars().nth(5);
-
-    let value = match letters {
-        Some(c) => c.to_string(),
-        None => String::from("No letter found"),
+    // instance of the navigation aids enum with data in them.
+    let ndb_uwl = NavigationAids::NDB(353);
+    let vor_dqn = NavigationAids::VOR(String::from("DQN"), 114.5);
+    let vor_dqn_sgh = NavigationAids::VORDME(String::from("SGH"), 113.2);
+    let fix_ugnit = NavigationAids::FIX {
+        name: String::from("TARRY"),
+        latitude: 40.05333,
+        longitude: -83.91367,
     };
 
-    println!("Letter: {}", value);
-
-    let animal = "DUCK";
-    if animal == "DUCK" {
-        println!("quack!");
-    } else if animal == "DOG" {
-        println!("woof!");
-    } else {
-        println!("*crickets*");
-    }
-
-    match animal {
-        "DUCK" => println!("quack!"),
-        "DOG" => println!("woof!"),
-        _ => println!("*crickets*"),
-    }
-
-
-    let ndb_frequency: u16 = 275;
-    match ndb_frequency {
-        190..=535 => println!("Medium frequency"),
-        3000..=30000 => println!("High frequency"),
-        _ => println!("Invalid frequency"),
-    }
-
-    match ndb_frequency {
-        ndb_frequency if ndb_frequency >= 190 && ndb_frequency <= 535 => {
-            println!("Medium frequency")
-        }
-        _ => println!("Invalid frequency"),
-    }
+    print_nav_aid(&ndb_uwl);
+    print_nav_aid(&vor_dqn);
+    print_nav_aid(&vor_dqn_sgh);
+    print_nav_aid(&fix_ugnit);
 
 }

@@ -23,4 +23,20 @@ fn main() {
         println!("scope_test: {}", scope_test);
     }
     println!("scope_test: {}", scope_test);
+
+    let squared = i32::pow(5, 2);
+    println!("5 squared is {}", squared);
+
+    let float_integar = f32::powi(6.5, 3);
+    println!("6.5 cubed is {}", float_integar);
+
+    let float_float = f32::powf(6.5, 3.14);
+    print!("6.5 to the power of pi is {}", float_float);
+
+    let are_equal_is_true = 5 == 5;
+    let are_not_equal_is_true = 5 != 5;
+
+    let is_true = true;
+    let is_false = !is_true;
+
 }
